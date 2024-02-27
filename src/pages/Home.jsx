@@ -2,6 +2,7 @@ import React, { useSyncExternalStore } from 'react';
 import axios from 'axios';
 import DATA_TPS from '../data/tps2.json';
 import Footer from '../components/Footer';
+import LoadingScreen from '../components/Loading';
 
 const { useState, useEffect } = React;
 
@@ -9,6 +10,7 @@ const Home = () => {
   const tpsUrl = 'https://kawalpemilu.org/assets/tps2.json';
   const [listTPS, setListTPS] = useState([]);
   const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({});
 
   let _totalPas1 = [];
@@ -21,6 +23,7 @@ const Home = () => {
   const [totalSemuanya, setTotalSemuanya] = useState([]);
 
   const _getTps = async () => {
+    setLoading(true);
     try {
       const names = DATA_TPS?.id2name;
       const tpsKeys = Object.keys(names);
@@ -38,10 +41,13 @@ const Home = () => {
     } catch (error) {
       console.log(error);
       setError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const _getCountData = async () => {
+    setLoading(true);
     const url = `https://kp24-fd486.et.r.appspot.com/h?id=`;
     try {
       const response = await axios.get(url);
@@ -51,6 +57,8 @@ const Home = () => {
     } catch (error) {
       console.log(error);
       setError(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -97,6 +105,9 @@ const Home = () => {
     setTotalSemuanya(totalPas1.concat(totalPas2).concat(totalPas3));
   }, [totalPas1, totalPas2, totalPas3]);
 
+  if (loading) {
+    return <LoadingScreen />
+  }
 
   return (
     <main className='min-h-screen relative'>
