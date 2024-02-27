@@ -36,7 +36,6 @@ const Home = () => {
           });
         }
       });
-      console.log(tps);
       setListTPS(tps);
     } catch (error) {
       console.log(error);
@@ -53,7 +52,6 @@ const Home = () => {
       const response = await axios.get(url);
       const data = response?.data?.result?.aggregated;
       setData(data);
-      console.log({ data });
     } catch (error) {
       console.log(error);
       setError(error);
