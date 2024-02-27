@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+th, td {
+  @apply border p-3
+}
+
+th {
+  @apply bg-slate-50
+}
